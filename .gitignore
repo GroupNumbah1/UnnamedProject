@@ -3,9 +3,9 @@
 /.idea/libraries
 /.idea/inspectionProfiles/
 /.gradle
-/local.properties
 .DS_Store
 /build
 app/build/
+/app/app.iml
 /captures
 
