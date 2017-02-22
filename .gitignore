@@ -2,6 +2,7 @@
 /.idea/tasks.xml
 /.idea/libraries
 /.idea/inspectionProfiles/
+/.idea/atlassian-ide-plugin.xml
 /.gradle
 .DS_Store
 /build
