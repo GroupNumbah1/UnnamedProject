@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         runAppButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getApplicationContext(),MagpieVPN.class));
+                finish();
             }
         });
-
 
     }//SetUpButtonPress
     /*@Override
