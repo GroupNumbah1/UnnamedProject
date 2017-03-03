@@ -2,21 +2,22 @@ package com.example.magpie.app;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import static android.widget.Toast.*;
 import static com.example.magpie.app.R.layout.magpie_vpn_start;
 
 /**
  * Created by mattpatera on 3/3/17.
  */
 
-public class MagpieVPN extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class MagpieVPN extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -28,7 +29,16 @@ public class MagpieVPN extends AppCompatActivity implements CompoundButton.OnChe
 
         // attach switch listener
         if (vpn_toggle != null) {
-            vpn_toggle.setOnCheckedChangeListener(this);
+            vpn_toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        Toast.makeText(MagpieVPN.this, "The VPN is starting up", LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MagpieVPN.this, "The VPN is shutting down", LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
@@ -37,14 +47,8 @@ public class MagpieVPN extends AppCompatActivity implements CompoundButton.OnChe
 
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Toast.makeText(this, "The VPN is " + (isChecked ? "starting up" : "shutting down"), Toast.LENGTH_SHORT).show();
+    private void stopVPN()
+    {
 
-        if (isChecked) {
-
-        } else {
-
-        }
     }
 }
