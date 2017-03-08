@@ -1,5 +1,8 @@
 package com.example.magpie.app;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,9 +21,25 @@ import static com.example.magpie.app.R.layout.magpie_vpn_start;
 
 public class MagpieVPN extends AppCompatActivity {
 
+    // Hexadecimal representation of a byte -> 00001111
+    private static final int VPN_REQUEST_CODE = 0x0F;
+
+    private boolean isWaitingForVPN;
+
+    // Receives broadcast from MagpieVPNService (line )
+    private BroadcastReceiver vpnStateReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // if the received broadcast is from
+            if (MagpieVPNService.BROADCAST_VPN_STATE.equals(intent.getAction())) {
+
+            }
+        }
+    };
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(magpie_vpn_start);
 
@@ -42,13 +61,11 @@ public class MagpieVPN extends AppCompatActivity {
         }
     }
 
-    private void startVPN()
-    {
+    private void startVPN() {
 
     }
 
-    private void stopVPN()
-    {
+    private void stopVPN() {
 
     }
 }
