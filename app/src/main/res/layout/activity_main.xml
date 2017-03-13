@@ -7,75 +7,24 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity"
-    android:elevation="1dp"
-    android:background="@android:color/background_light">
+>
 
-
-    <ImageButton
-        android:id="@+id/HelpInfoButton"
-        android:layout_width="160dp"
-        android:layout_height="110dp"
-        android:background="@android:color/black"
-        app:srcCompat="@android:drawable/ic_dialog_info"
-        android:layout_alignTop="@+id/SettingsButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:id="@+id/RunMagpieButton"
-        android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@mipmap/magpie" />
-
-    <ImageButton
-        android:id="@+id/ContactUsButton"
-        android:layout_width="160dp"
-        android:layout_height="110dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/black"
-        android:soundEffectsEnabled="true"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-    <ImageButton
-        android:id="@+id/SettingsButton"
-        android:layout_width="160dp"
-        android:layout_height="110dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/black"
-        android:tint="@android:color/transparent"
-        app:srcCompat="@mipmap/ic_settings"
-        android:layout_above="@+id/PrivacyPolicyButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="9dp" />
 
     <Button
-        android:id="@+id/PrivacyPolicyButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@android:color/black"
-        android:text="@string/privacy_policy"
-        android:textColor="@android:color/white" />
-
+            android:text="Run MagPie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" android:layout_marginTop="110dp" android:id="@+id/button10"/>
     <Button
-        android:id="@+id/AboutUsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ContactUsButton"
-        android:layout_alignEnd="@+id/HelpInfoButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/HelpInfoButton"
-        android:layout_alignTop="@+id/ContactUsButton"
-        android:background="@android:color/black"
-        android:text="@string/about_us"
-        android:textColor="@android:color/white" />
-
+            android:text="Settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_below="@+id/button10"
+            android:layout_alignRight="@+id/button10" android:layout_alignEnd="@+id/button10"
+            android:layout_marginTop="84dp" android:id="@+id/button11"/>
+    <Button
+            android:text="Technical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_below="@+id/button11"
+            android:layout_alignRight="@+id/button11" android:layout_alignEnd="@+id/button11"
+            android:layout_marginTop="97dp" android:id="@+id/button12"/>
 </RelativeLayout>
