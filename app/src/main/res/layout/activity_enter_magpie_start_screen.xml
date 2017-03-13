@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.magpie.app.EnterMagpieStartScreenActivity">
+
+    <Button
+        android:id="@+id/BeginMagPieButton"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/black"
+        android:text="@string/begin"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/PhoneCheckBox"
+        android:layout_alignStart="@+id/PhoneCheckBox" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/smtp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/type_of_packet"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/HTTPCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox"
+        android:layout_alignStart="@+id/checkBox"
+        android:layout_below="@+id/checkBox"
+        android:text="@string/http" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/HTTPCheckBox"
+        android:layout_marginTop="15dp"
+        android:text="@string/choose_downloadtype"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/EmailCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/CloudCheckBox"
+        android:layout_alignLeft="@+id/HTTPCheckBox"
+        android:layout_alignStart="@+id/HTTPCheckBox"
+        android:text="@string/email" />
+
+    <CheckBox
+        android:id="@+id/CloudCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/EmailCheckBox"
+        android:layout_alignStart="@+id/EmailCheckBox"
+        android:layout_below="@+id/textView5"
+        android:text="@string/cloud" />
+
+    <CheckBox
+        android:id="@+id/PhoneCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/CloudCheckBox"
+        android:layout_alignStart="@+id/CloudCheckBox"
+        android:layout_below="@+id/CloudCheckBox"
+        android:text="@string/phone" />
+
+</RelativeLayout>
