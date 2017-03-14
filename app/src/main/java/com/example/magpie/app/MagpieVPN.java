@@ -3,16 +3,14 @@ package com.example.magpie.app;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.VpnService;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import static android.widget.Toast.*;
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.magpie.app.R.layout.magpie_vpn_start;
 
 /**
@@ -62,7 +60,7 @@ public class MagpieVPN extends AppCompatActivity {
     }
 
     private void startVPN() {
-
+        Intent magpieVpnIntent = VpnService.prepare(this);
     }
 
     private void stopVPN() {
