@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view){
-        if(view.getId() == R.id.AboutUsButton){
+        /*if(view.getId() == R.id.AboutUsButton){
             Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
         }
-        else if(view.getId() == R.id.HelpInfoButton){
+        else*/ if(view.getId() == R.id.HelpInfoButton){
             Intent intent = new Intent(MainActivity.this, HelpInfoActivity.class);
             startActivity(intent);
         }
@@ -90,22 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aboutUsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                startActivity(new Intent(getApplicationContext(),MagpieVPN.class));
-                finish();
-=======
                 Intent intent = new Intent(MainActivity.this, HelpInfoActivity.class);
                 startActivity(intent);
-
->>>>>>> master
             }
         });
-   }//SetUpButtonPress*/
-
-<<<<<<< HEAD
     }//SetUpButtonPress
-=======
->>>>>>> master
+
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
