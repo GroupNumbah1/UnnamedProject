@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view){
-        if(view.getId() == R.id.AboutUsButton){
+        /*if(view.getId() == R.id.AboutUsButton){
             Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
         }
-        else if(view.getId() == R.id.HelpInfoButton){
+        else*/ if(view.getId() == R.id.HelpInfoButton){
             Intent intent = new Intent(MainActivity.this, HelpInfoActivity.class);
             startActivity(intent);
         }
