@@ -92,10 +92,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, HelpInfoActivity.class);
                 startActivity(intent);
-
             }
         });
-   }//SetUpButtonPress*/
+    }//SetUpButtonPress
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
