@@ -6,4 +6,25 @@
           android:title="@string/action_settings"
           android:orderInCategory="100"
     />
+    <item
+        android:id="@+id/action_about_us"
+        android:icon="@drawable/ic_settings3"
+        android:orderInCategory="101"
+        android:title="@string/about_us" />
+    <item
+        android:id="@+id/action_helpInfo"
+        android:orderInCategory="102"
+        android:title="@string/help" />
+    <item
+        android:id="@+id/action_Privacypolicy"
+        android:orderInCategory="103"
+        android:title="@string/privacy_policy" />
+    <item
+        android:id="@+id/action_contactus"
+        android:orderInCategory="104"
+        android:title="@string/contact_us" />
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="105"
+        android:title="@string/home" />
 </menu>

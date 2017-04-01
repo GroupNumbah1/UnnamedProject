@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    android:textAlignment="center">
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:textAlignment="center"
+    android:weightSum="1">
+
 
     <Switch
-        android:text="Turn VPN ON/OFF"
-        android:layout_width="match_parent"
+        android:id="@+id/vpn_toggle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/vpn_toggle" />
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarStyle="outsideOverlay"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        app:srcCompat="@mipmap/magpie"
+        tools:ignore="ContentDescription" />
 
     <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_weight="0.42" />
-</LinearLayout>
+        android:layout_below="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="@string/ON_OFF"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

@@ -25,7 +25,8 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }finally{
 
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    
+                    startActivity(new Intent(getApplicationContext(),MagpieVPN.class));
                     finish();
                 }
 

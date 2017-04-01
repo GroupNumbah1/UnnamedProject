@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class PrivacyPolicyActivity extends AppCompatActivity {
+public class AboutUsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy_policy);
+        setContentView(R.layout.activity_about_us);
     }
 
     @Override
@@ -33,31 +33,31 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
 
             //Intent links .this to 'X'.class
-            Intent intent = new Intent(PrivacyPolicyActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(AboutUsActivity.this, SettingsActivity.class);
             startActivity(intent);
             //return true;
         }
-        else if(id == R.id.action_about_us){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, AboutUsActivity.class);
+
+        else if(id == R.id.action_helpInfo){
+            Intent intent = new Intent(AboutUsActivity.this, HelpInfoActivity.class);
             startActivity(intent);
 
         }
 
         else if(id == R.id.action_home){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, MagpieVPN.class);
+            Intent intent = new Intent(AboutUsActivity.this, MagpieVPN.class);
             startActivity(intent);
 
         }
 
-        else if(id == R.id.action_helpInfo){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, HelpInfoActivity.class);
+        else if(id == R.id.action_Privacypolicy){
+            Intent intent = new Intent(AboutUsActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
 
         }
-
 
         else if(id == R.id.action_contactus){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, ContactUsInfoActivity.class);
+            Intent intent = new Intent(AboutUsActivity.this, ContactUsInfoActivity.class);
             startActivity(intent);
 
         }

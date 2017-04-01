@@ -14,18 +14,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
         android:tint="@android:color/black"
-        app:srcCompat="@android:drawable/ic_dialog_info" />
+        app:srcCompat="@android:drawable/ic_dialog_info"
+        tools:ignore="ContentDescription" />
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="@string/how_to_runMagpie"
-        android:textSize="24sp"
         android:layout_below="@+id/imageView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="88dp"
+        android:text="@string/how_to_runMagpie"
+        android:textSize="18sp" />
+
 </RelativeLayout>
