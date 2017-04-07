@@ -119,6 +119,7 @@ public class MagpieVPN extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     private void startVPN() {
         Log.i(TAG, "Starting MagpieVPN");
         Intent magpieVpnIntent = VpnService.prepare(this);
@@ -127,10 +128,17 @@ public class MagpieVPN extends AppCompatActivity {
         } else {
             onActivityResult(VPN_REQUEST_CODE, RESULT_OK, null);
             isWaitingForVPN = true;
-            startService(new Intent(this, MagpieVPNService.class));
         }
     }
 
+    //Handles result in startVPN() - placed in separate class
+    @Override
+    protected void onActivityResult(int request, int result, Intent data) {
+        if (result == RESULT_OK) {
+            Intent intent = new Intent(this, MagpieVPNService.class);
+            startService(intent);
+        }
+    }
     private void stopVPN() {
 
     }
