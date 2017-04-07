@@ -3,23 +3,26 @@ package com.example.magpie.app;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.VpnService;
+import android.os.Handler;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Selector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
-/**
- * Created by mattpatera on 3/3/17.
- */
+public class MagpieVPNService extends VpnService implements Runnable {
 
-public class MagpieVPNService extends VpnService {
-
-    //
     public static final String BROADCAST_VPN_STATE = "com.example.magpie.app.VPN_STATE";
 
     private static final String TAG = MagpieVPNService.class.getSimpleName();
@@ -31,10 +34,24 @@ public class MagpieVPNService extends VpnService {
     private static final int VPN_ROUTE_PREFIX_LENGTH = 0;
 
     private static boolean isRunning = false;
-
+    private Thread thread;
     private ParcelFileDescriptor vpnInterface = null;
 
     private PendingIntent pendingIntent;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        /*if(thread != null){
+            thread.interrupt();
+        }
+
+        thread = new Thread(this, "MagpieThread");
+        thread.start();
+        */
+        return START_STICKY;
+    }
+
 
     @Override
     public void onCreate()
@@ -54,6 +71,9 @@ public class MagpieVPNService extends VpnService {
     @Override
     public void onDestroy()
     {
+        /*if(thread != null){
+            thread.interrupt();
+        }*/
         super.onDestroy();
     }
 
@@ -66,13 +86,49 @@ public class MagpieVPNService extends VpnService {
         } else {
             Log.i(TAG, "An instance of Magpie VPN is already running.");
         }
+        run();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
+    private boolean run() throws Exception {
+        DatagramChannel tunnel = null;
+        boolean connected = false;
+
+        tunnel = DatagramChannel.open();
+        //Using localhost to read and write to self
+        tunnel.connect(new InetSocketAddress("127.0.0.1", 8087));
+        protect(tunnel.socket());
+        tunnel.configureBlocking(false);
+        FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
+        FileOutputStream out = new FileOutputStream(vpnInterface.getFileDescriptor());
+        ByteBuffer packet = ByteBuffer.allocate(32767);
+
+        while (true) {
+            boolean idle = true;
+            int length = in.read(packet.array());
+            if (length > 0) {
+                packet.limit(length);
+                tunnel.write(packet);
+                packet.clear();
+            }
+
+            length = tunnel.read(packet);
+            if (length > 0) {
+                if (packet.get(0) != 0) {
+                    out.write(packet.array(), 0, length);
+                }
+                packet.clear();
+            }
+        }
+        try {
+            tunnel.close();
+        } catch (Exception e) {
+        }
+        return connected;
+        }
+    }
+
+    public static boolean isRunning()
     {
-        return START_STICKY;
+        return isRunning;
     }
-
-    public static boolean isRunning() { return isRunning; }
 }
