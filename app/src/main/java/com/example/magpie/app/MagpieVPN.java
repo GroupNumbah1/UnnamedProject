@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.VpnService;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import static com.example.magpie.app.R.layout.temp_vpn_start;
 public class MagpieVPN extends AppCompatActivity {
 
     private static final String TAG = MagpieVPN.class.getSimpleName();
+
 
     // Hexadecimal representation of a byte -> 00001111
     private static final int VPN_REQUEST_CODE = 0x0F;
@@ -45,6 +47,9 @@ public class MagpieVPN extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(temp_vpn_start);
 
@@ -119,8 +124,8 @@ public class MagpieVPN extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     private void startVPN() {
+
         Log.i(TAG, "Starting MagpieVPN");
         Intent magpieVpnIntent = VpnService.prepare(this);
         if (magpieVpnIntent != null) {

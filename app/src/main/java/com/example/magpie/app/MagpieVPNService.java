@@ -21,7 +21,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-public class MagpieVPNService extends VpnService implements Runnable {
+public class MagpieVPNService extends VpnService{
 
     public static final String BROADCAST_VPN_STATE = "com.example.magpie.app.VPN_STATE";
 
@@ -86,7 +86,13 @@ public class MagpieVPNService extends VpnService implements Runnable {
         } else {
             Log.i(TAG, "An instance of Magpie VPN is already running.");
         }
-        run();
+        try {
+            run();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private boolean run() throws Exception {
@@ -101,13 +107,16 @@ public class MagpieVPNService extends VpnService implements Runnable {
         FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
         FileOutputStream out = new FileOutputStream(vpnInterface.getFileDescriptor());
         ByteBuffer packet = ByteBuffer.allocate(32767);
-
+        int i = 0;
         while (true) {
+
             boolean idle = true;
             int length = in.read(packet.array());
             if (length > 0) {
                 packet.limit(length);
+                Log.i(TAG, "before write: " + packet.toString());
                 tunnel.write(packet);
+                Log.i(TAG, "after write"  + packet.toString());
                 packet.clear();
             }
 
@@ -118,13 +127,22 @@ public class MagpieVPNService extends VpnService implements Runnable {
                 }
                 packet.clear();
             }
-        }
+            //TODO: temporary workaround before multithreading is added to exit the infinite loop
+            i++;
+            if (i >= 100)
+            {
+                break;
+            }
+
+        }/*
         try {
             tunnel.close();
         } catch (Exception e) {
         }
         return connected;
         }
+        */
+        return true;
     }
 
     public static boolean isRunning()
