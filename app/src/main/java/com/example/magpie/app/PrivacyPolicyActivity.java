@@ -1,6 +1,7 @@
 package com.example.magpie.app;
 
 import android.content.Intent;
+import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,14 +31,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            //Intent links .this to 'X'.class
-            Intent intent = new Intent(PrivacyPolicyActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            //return true;
-        }
-        else if(id == R.id.action_about_us){
+        if(id == R.id.action_about_us){
             Intent intent = new Intent(PrivacyPolicyActivity.this, AboutUsActivity.class);
             startActivity(intent);
 
@@ -55,12 +49,35 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
         }
 
+        else if(id == R.id.action_email){
+            Intent intent = new Intent(PrivacyPolicyActivity.this, EmailActivity.class);
+            startActivity(intent);
+        }
 
-        else if(id == R.id.action_contactus){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, ContactUsInfoActivity.class);
+        else if(id == R.id.action_homeMenuBar){
+            Intent intent = new Intent(PrivacyPolicyActivity.this, MagpieVPN.class);
             startActivity(intent);
 
         }
+
+        //Invokes email client list for email services
+        else if(id == R.id.action_startemail_client){
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            //Intent emailIntent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+            //emailIntent.setData(Uri.parse("mailto:" + to));
+
+            //SetType for email is message/rfc822
+            emailIntent.setType("message/rfc822");
+
+            //Sets up email already with subject and text message
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"youremail@xyz"});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Magpie Application");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "File from Magpie Application");
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
+        }
+
+
 
 
         return super.onOptionsItemSelected(item);

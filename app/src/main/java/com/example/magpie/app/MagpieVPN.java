@@ -84,14 +84,7 @@ public class MagpieVPN extends AppCompatActivity {
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            //Intent links .this to 'X'.class
-            Intent intent = new Intent(MagpieVPN.this, SettingsActivity.class);
-            startActivity(intent);
-            //return true;
-        }
-        else if(id == R.id.action_about_us){
+        if(id == R.id.action_about_us){
             Intent intent = new Intent(MagpieVPN.this, AboutUsActivity.class);
             startActivity(intent);
 
@@ -109,11 +102,26 @@ public class MagpieVPN extends AppCompatActivity {
 
         }
 
-        else if(id == R.id.action_contactus){
-            Intent intent = new Intent(MagpieVPN.this, ContactUsInfoActivity.class);
+        else if(id == R.id.action_email){
+            Intent intent = new Intent(MagpieVPN.this, EmailActivity.class);
             startActivity(intent);
+        }
+
+        //invokes email clients for email services
+        else if(id == R.id.action_startemail_client){
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            //Intent emailIntent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+            //emailIntent.setData(Uri.parse("mailto:" + to));
+
+            //SetType for email is message/rfc822
+            emailIntent.setType("message/rfc822");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"youremail@xyz"});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Magpie Application");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "File from Magpie Application");
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
         }
+
 
 
         return super.onOptionsItemSelected(item);

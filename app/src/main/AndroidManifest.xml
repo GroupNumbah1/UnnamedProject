@@ -42,20 +42,18 @@
         </intent-filter>
 
         <activity
-            android:name=".ContactUsInfoActivity"
-            android:label="Magpie" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="Magpie" />
-        <activity
             android:name=".HelpInfoActivity"
             android:label="Magpie" />
         <activity
             android:name=".PrivacyPolicyActivity"
-            android:label="Privacy Policy" />
+            android:label="Magpie" />
         <activity
             android:name=".AboutUsActivity"
-            android:label="Magpie"></activity>
+            android:label="Magpie" />
+        <activity
+            android:name=".EmailActivity"
+            android:label="Magpie"
+            ></activity>
     </application>
 
 </manifest>
