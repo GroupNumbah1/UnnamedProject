@@ -68,6 +68,34 @@ public class MagpieVPN extends AppCompatActivity {
         }
     }
 
+    private void startVPN() {
+        Log.i(TAG, "Starting MagpieVPN (MAGPIEVPN: 72)");
+        Intent magpieVpnIntent = VpnService.prepare(this);
+        if (magpieVpnIntent != null) {
+            startActivityForResult(magpieVpnIntent, VPN_REQUEST_CODE);
+        } else {
+            onActivityResult(VPN_REQUEST_CODE, RESULT_OK, null);
+        }
+    }
+
+    // This must be an override because startActivityForResult calls it upon receiving the go-ahead
+    // from the phone's "allow vpn connection" box.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VPN_REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            isWaitingForVPN = true;
+            startService(new Intent(this, MagpieVPNService.class));
+            Log.i(TAG, "VPNIntent creation successful (MAGPIEVPN: 89)");
+        }
+    }
+
+    private void stopVPN() {
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,22 +145,5 @@ public class MagpieVPN extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void startVPN() {
-        Log.i(TAG, "Starting MagpieVPN (MAGPIEVPN: 123)");
-        Intent magpieVpnIntent = VpnService.prepare(this);
-        if (magpieVpnIntent != null) {
-            startActivityForResult(magpieVpnIntent, VPN_REQUEST_CODE);
-        } else {
-            Log.i(TAG, "VPNIntent creation successful (MAGPIEVPN: 128)");
-            onActivityResult(VPN_REQUEST_CODE, RESULT_OK, null);
-            isWaitingForVPN = true;
-            startService(new Intent(this, MagpieVPNService.class));
-        }
-    }
-
-    private void stopVPN() {
-
     }
 }
