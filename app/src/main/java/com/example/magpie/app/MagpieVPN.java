@@ -120,11 +120,12 @@ public class MagpieVPN extends AppCompatActivity {
     }
 
     private void startVPN() {
-        Log.i(TAG, "Starting MagpieVPN");
+        Log.i(TAG, "Starting MagpieVPN (MAGPIEVPN: 123)");
         Intent magpieVpnIntent = VpnService.prepare(this);
         if (magpieVpnIntent != null) {
             startActivityForResult(magpieVpnIntent, VPN_REQUEST_CODE);
         } else {
+            Log.i(TAG, "VPNIntent creation successful (MAGPIEVPN: 128)");
             onActivityResult(VPN_REQUEST_CODE, RESULT_OK, null);
             isWaitingForVPN = true;
             startService(new Intent(this, MagpieVPNService.class));

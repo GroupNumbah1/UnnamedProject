@@ -44,9 +44,9 @@ public class MagpieVPNService extends VpnService {
         setupVPN();
         try {
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_VPN_STATE).putExtra("running", true));
-            Log.i(TAG, "Started MagpieVPNService");
+            Log.i(TAG, "Broadcasting service intent(MAGPIEVPNService: 47)");
         } catch (Exception e) {
-            Log.e(TAG, "ERROR starting device", e);
+            Log.e(TAG, "ERROR starting device (MAGPIEVPNService: 49)", e);
 
         }
     }
@@ -59,12 +59,13 @@ public class MagpieVPNService extends VpnService {
 
     private void setupVPN() {
         if (vpnInterface == null) {
+            Log.i(TAG, "Setting up VPN (MAGPIEVPNService: 62)");
             Builder vpnBuilder = new Builder();
             vpnBuilder.addAddress(VPN_ADDRESS, VPN_ADDRESS_PREFIX_LENGTH);
             vpnBuilder.addRoute(VPN_ROUTE, VPN_ROUTE_PREFIX_LENGTH);
             vpnInterface = vpnBuilder.setSession("Magpie VPN").setConfigureIntent(pendingIntent).establish();
         } else {
-            Log.i(TAG, "An instance of Magpie VPN is already running.");
+            Log.i(TAG, "An instance of Magpie VPN is already running. (MAGPIEVPNService: 68)");
         }
     }
 
