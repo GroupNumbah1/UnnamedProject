@@ -7,12 +7,17 @@ import android.os.ParcelFileDescriptor;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.io.Closeable;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.Selector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by mattpatera on 3/3/17.
@@ -34,6 +39,11 @@ public class MagpieVPNService extends VpnService {
 
     private static boolean isRunning = false;
 
+    private ConcurrentLinkedQueue<UdpPacket> deviceToNetworkUDPQueue;
+    private ConcurrentLinkedQueue<ByteBuffer> networkToDeviceQueue;
+    private ExecutorService executorService;
+    private Selector udpSelector;
+
     private ParcelFileDescriptor vpnInterface = null;
 
     private PendingIntent pendingIntent;
@@ -45,6 +55,15 @@ public class MagpieVPNService extends VpnService {
         isRunning = true;
         setupVPN();
         try {
+            udpSelector = Selector.open();
+            deviceToNetworkUDPQueue = new ConcurrentLinkedQueue<UdpPacket>(); // may need to be untyped
+            networkToDeviceQueue = new ConcurrentLinkedQueue<ByteBuffer>();
+
+            executorService = Executors.newFixedThreadPool(3);
+            executorService.submit(new PacketIn(networkToDeviceQueue, udpSelector));
+            executorService.submit(new PacketOut(deviceToNetworkUDPQueue, udpSelector, this));
+            executorService.submit(new VPNRunnable(vpnInterface.getFileDescriptor(), deviceToNetworkUDPQueue, networkToDeviceQueue));
+
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_VPN_STATE).putExtra("running", true));
             Log.i(TAG, "Broadcasting service intent(MAGPIEVPNService: 47)");
         } catch (Exception e) {
@@ -80,4 +99,108 @@ public class MagpieVPNService extends VpnService {
     }
 
     public static boolean isRunning() { return isRunning; }
+
+    private static void closeResources(Closeable... resources)
+    {
+        for (Closeable resource : resources)
+        {
+            try
+            {
+                resource.close();
+            }
+            catch (IOException e)
+            {
+                // Ignore
+            }
+        }
+    }
+
+    private static class VPNRunnable implements Runnable
+    {
+        private static final String TAG = VPNRunnable.class.getSimpleName();
+
+        private FileDescriptor vpnFileDescriptor;
+
+        private ConcurrentLinkedQueue<UdpPacket> deviceToNetworkUDPQueue;
+        private ConcurrentLinkedQueue<ByteBuffer> networkToDeviceQueue;
+
+        public VPNRunnable(FileDescriptor vpnFileDescriptor,
+                           ConcurrentLinkedQueue<UdpPacket> deviceToNetworkUDPQueue,
+                           ConcurrentLinkedQueue<ByteBuffer> networkToDeviceQueue)
+        {
+            this.vpnFileDescriptor = vpnFileDescriptor;
+            this.deviceToNetworkUDPQueue = deviceToNetworkUDPQueue;
+            this.networkToDeviceQueue = networkToDeviceQueue;
+        }
+
+        @Override
+        public void run() {
+            Log.i(TAG, "Started");
+
+            FileChannel vpnInput = new FileInputStream(vpnFileDescriptor).getChannel();
+            FileChannel vpnOutput = new FileOutputStream(vpnFileDescriptor).getChannel();
+
+            try {
+                ByteBuffer bufferToNetwork = null;
+                boolean dataSent = true;
+                boolean dataReceived;
+                while (!Thread.interrupted()) {
+                    if (dataSent)
+                        bufferToNetwork = ByteBufferPool.acquire();
+                    else
+                        bufferToNetwork.clear();
+
+                    // TODO: Block when not connected
+                    int readBytes = vpnInput.read(bufferToNetwork);
+                    if (readBytes > 0) {
+                        dataSent = true;
+                        bufferToNetwork.flip();
+                        //Log.i(TAG, bufferToNetwork.toString());
+                        UdpPacket packet = new UdpPacket(bufferToNetwork);
+                        if (packet.isUDP) {
+                            deviceToNetworkUDPQueue.offer(packet);
+                        } else {
+                            Log.w(TAG, "Unknown packet type");
+                            Log.w(TAG, packet.ip4Header.toString());
+                            dataSent = false;
+                        }
+                    } else {
+                        dataSent = false;
+                    }
+
+                    ByteBuffer bufferFromNetwork = networkToDeviceQueue.poll();
+                    if (bufferFromNetwork != null) {
+                        bufferFromNetwork.flip();
+                        //Log.i(TAG, bufferFromNetwork.toString()); // HERE
+                        while (bufferFromNetwork.hasRemaining())
+                            Log.i(TAG, "" + bufferFromNetwork.get());
+                        vpnOutput.write(bufferFromNetwork);
+                        dataReceived = true;
+
+                        ByteBufferPool.release(bufferFromNetwork);
+                    }
+                    else {
+                        dataReceived = false;
+                    }
+
+                    // TODO: Sleep-looping is not very battery-friendly, consider blocking instead
+                    // Confirm if throughput with ConcurrentQueue is really higher compared to BlockingQueue
+                    if (!dataSent && !dataReceived)
+                        Thread.sleep(10);
+                }
+            }
+            catch (InterruptedException e)
+            {
+                Log.i(TAG, "Stopping");
+            }
+            catch (IOException e)
+            {
+                Log.w(TAG, e.toString(), e);
+            }
+            finally
+            {
+                closeResources(vpnInput, vpnOutput);
+            }
+        }
+    }
 }

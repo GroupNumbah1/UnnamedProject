@@ -19,7 +19,7 @@ public class UdpPacket {
     public IP4Header ip4Header;
     public UDPHeader udpHeader;
 
-    private boolean isUDP;
+    public boolean isUDP; // make getter
 
     public ByteBuffer backingBuffer;
 
@@ -34,6 +34,18 @@ public class UdpPacket {
             this.isUDP = false;
         }
         this.backingBuffer = buff;
+    }
+
+    public void swapSourceAndDestination() {
+        InetAddress newSourceAddress = ip4Header.target;
+        ip4Header.target = ip4Header.source;
+        ip4Header.source = newSourceAddress;
+
+        if (isUDP) {
+            int newSourcePort = udpHeader.destinationPort;
+            udpHeader.destinationPort = udpHeader.sourcePort;
+            udpHeader.sourcePort = newSourcePort;
+        } 
     }
 
     public void updateUDPBuffer(ByteBuffer buffer, int payloadSize) {
