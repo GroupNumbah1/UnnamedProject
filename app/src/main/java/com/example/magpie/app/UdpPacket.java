@@ -19,6 +19,8 @@ public class UdpPacket {
     public IP4Header ip4Header;
     public UDPHeader udpHeader;
 
+    private boolean isUDP;
+
     public ByteBuffer backingBuffer;
 
     public UdpPacket(ByteBuffer buff) {
@@ -27,8 +29,59 @@ public class UdpPacket {
 
         if (this.ip4Header.protocol == UDP_PROTOCOL_NUM) {
             this.udpHeader = new UDPHeader(buff);
+            this.isUDP = true;
+        } else {
+            this.isUDP = false;
         }
         this.backingBuffer = buff;
+    }
+
+    public void updateUDPBuffer(ByteBuffer buffer, int payloadSize) {
+        buffer.position(0);
+        udpHeader.fillHeader(buffer);
+        backingBuffer = buffer;
+
+        int udpTotalLength = UDP_HEADER_BYTE_SIZE + payloadSize;
+        backingBuffer.putShort(IP4_HEADER_BYTE_SIZE + 4, (short) udpTotalLength);
+        udpHeader.length = udpTotalLength;
+
+        // Disable UDP checksum validation
+        backingBuffer.putShort(IP4_HEADER_BYTE_SIZE + 6, (short) 0);
+        udpHeader.checksum = 0;
+
+        int ip4TotalLength = IP4_HEADER_BYTE_SIZE + udpTotalLength;
+        backingBuffer.putShort(2, (short) ip4TotalLength);
+        ip4Header.totalLen = ip4TotalLength;
+
+        updateIP4Checksum();
+    }
+
+    private void updateIP4Checksum() {
+        ByteBuffer buffer = backingBuffer.duplicate();
+        buffer.position(0);
+
+        // Clear previous checksum
+        buffer.putShort(10, (short) 0);
+
+        int ipLength = ip4Header.headerLen;
+        int sum = 0;
+        while (ipLength > 0) {
+            sum += BitUtility.getUnsignedShort(buffer.getShort());
+            ipLength -= 2;
+        }
+        while (sum >> 16 > 0)
+            sum = (sum & 0xFFFF) + (sum >> 16);
+
+        sum = ~sum;
+        ip4Header.checksum = sum;
+        backingBuffer.putShort(10, (short) sum);
+    }
+
+    private void fillHeader(ByteBuffer buffer) {
+        ip4Header.fillHeader(buffer);
+        if (isUDP) {
+            udpHeader.fillHeader(buffer);
+        }
     }
 
     public static class IP4Header {
@@ -108,7 +161,7 @@ public class UdpPacket {
             this.checksum = BitUtility.getUnsignedShort(buffer.getShort());
         }
 
-        private void fillHeader(ByteBuffer buffer) {
+        public void fillHeader(ByteBuffer buffer) {
             buffer.putShort((short) this.sourcePort);
             buffer.putShort((short) this.destinationPort);
 
