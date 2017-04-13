@@ -154,6 +154,24 @@ public class UdpPacket {
             buffer.put(this.source.getAddress());
             buffer.put(this.target.getAddress());
         }
+        public String toString()
+        {
+            return "IPV4 PACKET: \n" +
+                    "\t\tVersion: " + this.version + "\n" +
+                    "\t\tIHL (32 bit words): " + this.internetHeaderLen + "\n" +
+                    "\t\tHeader Length (Bytes): " + this.headerLen + "\n" +
+                    "\t\tDSCP: " + this.DSCP + "\n" +
+                    "\t\tIdentifier: " + (BitUtility.getUnsignedInt(this.whyAreFlags3Bits)>> 16) + "\n" +
+                    "\t\tFlags: " + ((this.whyAreFlags3Bits >> 13) & 0x7) + "\n" +
+                    "\t\tFragment offset: " + (this.whyAreFlags3Bits & 0x1FFF) + "\n" +
+                    "\t\tTime to Live: " + (this.timeToLive) + "\n" +
+                    "\t\tprotocol: " + (this.protocolNum & 0xFF) + "\n" +
+                    "\t\tchecksum: " + this.checksum + "\n" +
+                    "\t\tsource address: " + this.source.getHostAddress() + "\n" +
+                    "\t\ttarget address: " + this.target.getHostAddress() + "\n\n";
+
+
+        }
     }
 
     public static class UDPHeader {
@@ -197,6 +215,11 @@ public class UdpPacket {
 
         private static int getUnsignedShort(short value) {
             return value & 0xFFFF;
+        }
+
+        private static long getUnsignedInt(int value)
+        {
+            return value & 0xFFFFFFFFL;
         }
     }
 
