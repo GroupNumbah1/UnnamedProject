@@ -6,20 +6,43 @@
     <string name="action_settings">Settings</string>
     <string name="begin">Begin</string>
     <string name="email">email</string>
+    <string name="Send">Send</string>
+    <string name="Email">Email</string>
+    <string name="subject">Subject</string>
+    <string name="entermessage">Enter Message</string>
+    <string name="attachment">Attachment</string>
     <string name="cloud">cloud</string>
     <string name="help">Help?</string>
     <string name="home">HOME</string>
+    <string name="email_example">jDoe@gmail.com\nsomeones@yahoo.com</string>
+    <string name="privacypolicy">Magpie application establishes a VPN connection in order to began packet capture. Once established
+SMTP packets can be collected. The packets are downloaded to your internal memory by default. We as a
+company do not collect any data from user during packet capture process. Additionally, the user has an option
+to send captured packets to a subsequent email, the application collects the users email address.
+Once user exits application email address is deleted and must be re-entered to send additional data.  </string>
     <string name="ON_OFF">Toggle VPN ON/OFF</string>
-    <string name="info_forAboutus">We are students attending UofM. Are interests in computer science varies
-    and we teamed up to make the Magpie application a reality for Advanced Progamming II. Magpie is a mobile NFAT app which will capture SMTP packets.</string>
+    <string name="info_forAboutus">We are a group of four attending University of Montana. This is our Senior Capstone
+        project in CSCI 427 Advanced Progamming II. Are interests in computer science varies. However, we all agreed that this particular project would be an
+        enjoyable endeavor to partake. Magpie named because of the method behind the Magpies nest building.. sifting, searching, for shiny tidbits to
+        decorate its nest. Our tidbits are network packets specifically SMTP packets. Magpie is designed as a NFAT.</string>
     <string name="contact_us">Contact us</string>
     <string name="phone">internal storage</string>
     <string name="type_of_packet">Choose type of Packets to capture</string>
     <string name="smtp">SMTP</string>
     <string name="http">HTTP</string>
+    <string name="additionalInfo">Click for Additional Info\n\nSMTP - (Simple Mail Transfer Protocol)
+        SMTP is a delivery protocol. Type of protocol used for sending and receiving of emails.
+        .\n\nPCAP File - PCAP or Packet Capture is a data file that is generated from network analysis. These files will then
+        be further processed to view contents of the file.\n\nVPN -
+        Virtual private network forms a virtual network interface. This allows for its own IP address which will
+        allow for access to the network packets since all networ traffic will be routed through VPN service.\n\nPacket Capture Process - When vpn is on, packets will be come accessible.
+    Once accessible, access to all network is traffic is established. However, we are in search of only SMTP packets
+    which will be distinguishable by its header information. Information obtained can be sender, receiver, source
+    , destination, and contents of email.</string>
+    <string name="magpieopen_source">Magpie Open Source</string>
+    <string name="magpie_fakeinternaddress">https://github.com/MagpieDevs/Magpie</string>
     <string name="choose_downloadtype">Choose delivery method of packets</string>
-    <string name="how_to_runMagpie">How to run: Click launch icon. Toggle switch to on Magpie start VPN.
-    Click on menu to see contact us, about us, info on application, and the privacy policy.
-        In the following view check box will appear getting options for what type of packets to capture. Also, were to send
-     the final product ie email, cloud, pc. Click began to capture packets. In the run screen options to stop and exit.</string>
+    <string name="how_to_runMagpie">Toggle switch to on Magpie start VPN. This begins the packet capture process.
+        Toggle switch on/off, to stop VPN service. This will stop packet capture process. The type of packets captured are SMTP.
+        Additionally, click on menu items to see contact us, about us, info on application, and privacy policy. </string>
 </resources>

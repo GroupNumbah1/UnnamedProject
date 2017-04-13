@@ -5,13 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-public class HelpInfoActivity extends AppCompatActivity {
+public class HelpInfoActivity extends AppCompatActivity implements View.OnClickListener{
+
+    TextView textV_moreinfo;
+    boolean isTxtViewClicked = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_info);
+
+        textV_moreinfo = (TextView)findViewById(R.id.additional_infoTxtV);
+        textV_moreinfo.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -30,15 +41,7 @@ public class HelpInfoActivity extends AppCompatActivity {
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            //Intent links .this to 'X'.class
-            Intent intent = new Intent(HelpInfoActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            //return true;
-        }
-
-        else if(id == R.id.action_home){
+        if(id == R.id.action_home){
             Intent intent = new Intent(HelpInfoActivity.this, MagpieVPN.class);
             startActivity(intent);
 
@@ -57,14 +60,49 @@ public class HelpInfoActivity extends AppCompatActivity {
 
         }
 
-        else if(id == R.id.action_contactus){
-            Intent intent = new Intent(HelpInfoActivity.this, ContactUsInfoActivity.class);
+        else if(id == R.id.action_email){
+            Intent intent = new Intent(HelpInfoActivity.this, EmailActivity.class);
             startActivity(intent);
+        }
+
+        else if(id == R.id.action_homeMenuBar){
+            Intent intent = new Intent(HelpInfoActivity.this, MagpieVPN.class);
+            startActivity(intent);
+
+        }
+
+        //invokes email clients for email services
+        else if(id == R.id.action_startemail_client){
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+            //Intent emailIntent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+            //emailIntent.setData(Uri.parse("mailto:" + to));
+            //SetType for email is message/rfc822
+            emailIntent.setType("message/rfc822");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"youremail@xyz"});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Magpie Application");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "File from Magpie Application");
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        //if text is clicked expand click again to collapse
+        if(isTxtViewClicked){
+            //set maxlines to 1 once clicked again
+            textV_moreinfo.setMaxLines(1);
+            isTxtViewClicked = false;
+        } else {
+            //expands textview to all lines
+            textV_moreinfo.setMaxLines(Integer.MAX_VALUE);
+            isTxtViewClicked = true;
+        }
     }
 
 }
