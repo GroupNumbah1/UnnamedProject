@@ -7,6 +7,7 @@ import android.os.ParcelFileDescriptor;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Selector;
@@ -24,6 +25,7 @@ public class MagpieVPNService extends VpnService {
 
     private static final String TAG = MagpieVPNService.class.getSimpleName();
 
+    // default port that handles IPv4 connections
     private static final String VPN_ADDRESS = "10.0.0.2";
     private static final int VPN_ADDRESS_PREFIX_LENGTH = 32;
 
@@ -59,9 +61,11 @@ public class MagpieVPNService extends VpnService {
 
     private void setupVPN() {
         if (vpnInterface == null) {
-            Log.i(TAG, "Setting up VPN (MAGPIEVPNService: 62)");
+            Log.i(TAG, "Setting up VPN Builder (MAGPIEVPNService: 62)");
             Builder vpnBuilder = new Builder();
+            // Add address on which VPN listens
             vpnBuilder.addAddress(VPN_ADDRESS, VPN_ADDRESS_PREFIX_LENGTH);
+            // Route VPN traffic to desired internal location
             vpnBuilder.addRoute(VPN_ROUTE, VPN_ROUTE_PREFIX_LENGTH);
             vpnInterface = vpnBuilder.setSession("Magpie VPN").setConfigureIntent(pendingIntent).establish();
         } else {
