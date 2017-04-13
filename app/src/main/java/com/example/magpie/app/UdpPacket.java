@@ -71,27 +71,68 @@ public class UdpPacket {
                 e.printStackTrace();
             }
 
+
+        }
+
+        public void fillHeader(ByteBuffer buffer) {
+            //each break seperates 32 bits of the header
+            buffer.put((byte) (this.version << 4 | this.internetHeaderLen));
+            buffer.put((byte) this.DSCP);
+            buffer.putShort((short) this.headerLen);
+
+            buffer.putInt(this.whyAreFlags3Bits);
+
+            buffer.put((byte) this.timeToLive);
+            buffer.put((byte) this.protocol);
+            buffer.putShort((short) this.checksum);
+
+            buffer.put(this.source.getAddress());
+            buffer.put(this.target.getAddress());
         }
     }
 
     public static class UDPHeader {
 
-        private UDPHeader(ByteBuffer buff) {
+        public int sourcePort;
+        public int destinationPort;
 
+        public int length;
+        public int checksum;
+
+
+        private UDPHeader(ByteBuffer buffer) {
+            this.sourcePort = BitUtility.getUnsignedShort(buffer.getShort());
+            this.destinationPort = BitUtility.getUnsignedShort(buffer.getShort());
+
+            this.length = BitUtility.getUnsignedShort(buffer.getShort());
+            this.checksum = BitUtility.getUnsignedShort(buffer.getShort());
         }
+
+        private void fillHeader(ByteBuffer buffer) {
+            buffer.putShort((short) this.sourcePort);
+            buffer.putShort((short) this.destinationPort);
+
+            buffer.putShort((short) this.length);
+            buffer.putShort((short) this.checksum);
+        }
+
+        @Override
+        public String toString() {
+            return "UDPHeader{ \nsourcePort=" + sourcePort + ", destinationPort=" + destinationPort +
+                    ", length=" + length + ", checksum=" + checksum + "\n}";
+        }
+
+
     }
 
-
-    private static class BitUtility
-    {
-        private static short getUnsignedByte(byte value)
-        {
-            return (short)(value & 0xFF);
+    private static class BitUtility {
+        private static short getUnsignedByte(byte value) {
+            return (short) (value & 0xFF);
         }
 
-        private static int getUnsignedShort(short value)
-        {
+        private static int getUnsignedShort(short value) {
             return value & 0xFFFF;
         }
     }
+
 }
