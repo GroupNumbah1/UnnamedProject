@@ -93,10 +93,5 @@ public class UdpPacket {
         {
             return value & 0xFFFF;
         }
-
-        private static long getUnsignedInt(int value)
-        {
-            return value & 0xFFFFFFFFL;
-        }
     }
 }
