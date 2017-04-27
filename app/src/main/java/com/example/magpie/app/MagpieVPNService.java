@@ -1,13 +1,16 @@
 package com.example.magpie.app;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.VpnService;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +22,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static android.os.Environment.DIRECTORY_DOCUMENTS;
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 /**
  * Created by mattpatera on 3/3/17.
  */
@@ -26,6 +32,8 @@ import java.util.concurrent.Executors;
 public class MagpieVPNService extends VpnService {
 
     //
+    private static Context context;
+
     public static final String BROADCAST_VPN_STATE = "com.example.magpie.app.VPN_STATE";
 
     private static final String TAG = MagpieVPNService.class.getSimpleName();
@@ -52,6 +60,7 @@ public class MagpieVPNService extends VpnService {
     public void onCreate()
     {
         super.onCreate();
+        MagpieVPNService.context = getApplicationContext();
         isRunning = true;
         setupVPN();
         try {
@@ -136,6 +145,9 @@ public class MagpieVPNService extends VpnService {
         @Override
         public void run() {
             Log.i(TAG, "Started");
+            Log.i(TAG, context.getFilesDir().toString());
+
+            File fileDir = new File(context.getFilesDir(), "file1");
 
             FileChannel vpnInput = new FileInputStream(vpnFileDescriptor).getChannel();
             FileChannel vpnOutput = new FileOutputStream(vpnFileDescriptor).getChannel();
@@ -159,8 +171,16 @@ public class MagpieVPNService extends VpnService {
                         UdpPacket packet = new UdpPacket(bufferToNetwork);
                         if (packet.isUDP) {
                             deviceToNetworkUDPQueue.offer(packet);
+
                         } else {
-                            Log.w(TAG, "Unknown packet type");
+                            try {
+                                FileOutputStream outputStream = new FileOutputStream(fileDir, true);
+                                outputStream.write(packet.ip4Header.toString().getBytes());
+                                outputStream.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            // Log.w(TAG, "Unknown packet type");
                             Log.w(TAG, packet.ip4Header.toString());
                             dataSent = false;
                         }
@@ -171,9 +191,9 @@ public class MagpieVPNService extends VpnService {
                     ByteBuffer bufferFromNetwork = networkToDeviceQueue.poll();
                     if (bufferFromNetwork != null) {
                         bufferFromNetwork.flip();
-                        //Log.i(TAG, bufferFromNetwork.toString()); // HERE
+                        // Log.i(TAG, bufferFromNetwork.toString()); // HERE
                         while (bufferFromNetwork.hasRemaining())
-                            Log.i(TAG, "" + bufferFromNetwork.get());
+                            // Log.i(TAG, "" + bufferFromNetwork.get());
                         vpnOutput.write(bufferFromNetwork);
                         dataReceived = true;
 
