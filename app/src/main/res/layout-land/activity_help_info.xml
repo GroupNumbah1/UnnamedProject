@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     tools:context="com.example.magpie.app.HelpInfoActivity">
 
     <RelativeLayout
@@ -32,7 +31,6 @@
             android:layout_alignParentTop="true"
             android:background="@android:color/black"
             android:fontFamily="sans-serif-smallcaps"
-            android:gravity="center"
             android:text="@string/help"
             android:textColor="@android:color/white"
             android:textSize="30sp"

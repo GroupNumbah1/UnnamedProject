@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +20,10 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(menu instanceof MenuBuilder){
+            MenuBuilder m = (MenuBuilder) menu;
+            m.setOptionalIconsVisible(true);
+        }
         return true;
     }
 
@@ -49,11 +54,6 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
         }
 
-        else if(id == R.id.action_email){
-            Intent intent = new Intent(PrivacyPolicyActivity.this, EmailActivity.class);
-            startActivity(intent);
-        }
-
         else if(id == R.id.action_homeMenuBar){
             Intent intent = new Intent(PrivacyPolicyActivity.this, MagpieVPN.class);
             startActivity(intent);
@@ -61,7 +61,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         }
 
         //Invokes email client list for email services
-        else if(id == R.id.action_startemail_client){
+        else if(id == R.id.action_startemail_client) {
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             //Intent emailIntent = getPackageManager().getLaunchIntentForPackage("com.android.email");
             //emailIntent.setData(Uri.parse("mailto:" + to));
@@ -74,11 +74,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Magpie Application");
             emailIntent.putExtra(Intent.EXTRA_TEXT, "File from Magpie Application");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-
         }
-
-
-
 
         return super.onOptionsItemSelected(item);
     }
