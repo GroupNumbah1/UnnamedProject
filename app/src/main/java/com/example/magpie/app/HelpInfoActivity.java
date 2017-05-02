@@ -3,6 +3,7 @@ package com.example.magpie.app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,10 @@ public class HelpInfoActivity extends AppCompatActivity implements View.OnClickL
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(menu instanceof MenuBuilder){
+            MenuBuilder m = (MenuBuilder) menu;
+            m.setOptionalIconsVisible(true);
+        }
         return true;
     }
 
@@ -58,11 +63,6 @@ public class HelpInfoActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(HelpInfoActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
 
-        }
-
-        else if(id == R.id.action_email){
-            Intent intent = new Intent(HelpInfoActivity.this, EmailActivity.class);
-            startActivity(intent);
         }
 
         else if(id == R.id.action_homeMenuBar){

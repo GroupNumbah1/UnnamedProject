@@ -1,17 +1,7 @@
 <resources>
     <string name="app_name">Magpie</string>
     <string name="about_us">About Us</string>
-    <string name="hello_world">Hello world!</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="action_settings">Settings</string>
-    <string name="begin">Begin</string>
-    <string name="email">email</string>
-    <string name="Send">Send</string>
-    <string name="Email">Email</string>
-    <string name="subject">Subject</string>
-    <string name="entermessage">Enter Message</string>
-    <string name="attachment">Attachment</string>
-    <string name="cloud">cloud</string>
     <string name="help">Help?</string>
     <string name="home">HOME</string>
     <string name="email_example">jDoe@gmail.com\nsomeones@yahoo.com</string>
@@ -26,10 +16,7 @@ Once user exits application email address is deleted and must be re-entered to s
         enjoyable endeavor to partake. Magpie named because of the method behind the Magpies nest building.. sifting, searching, for shiny tidbits to
         decorate its nest. Our tidbits are network packets specifically SMTP packets. Magpie is designed as a NFAT.</string>
     <string name="contact_us">Contact us</string>
-    <string name="phone">internal storage</string>
-    <string name="type_of_packet">Choose type of Packets to capture</string>
-    <string name="smtp">SMTP</string>
-    <string name="http">HTTP</string>
+    <string name="thanks">Special Thanks for Icons made by Freepic from www.flaticon.com </string>
     <string name="additionalInfo">Click for Additional Info\n\nSMTP - (Simple Mail Transfer Protocol)
         SMTP is a delivery protocol. Type of protocol used for sending and receiving of emails.
         .\n\nPCAP File - PCAP or Packet Capture is a data file that is generated from network analysis. These files will then
@@ -40,8 +27,8 @@ Once user exits application email address is deleted and must be re-entered to s
     which will be distinguishable by its header information. Information obtained can be sender, receiver, source
     , destination, and contents of email.</string>
     <string name="magpieopen_source">Magpie Open Source</string>
+    <string name="emailstart">Email Start</string>
     <string name="magpie_fakeinternaddress">https://github.com/MagpieDevs/Magpie</string>
-    <string name="choose_downloadtype">Choose delivery method of packets</string>
     <string name="how_to_runMagpie">Toggle switch to on Magpie start VPN. This begins the packet capture process.
         Toggle switch on/off, to stop VPN service. This will stop packet capture process. The type of packets captured are SMTP.
         Additionally, click on menu items to see contact us, about us, info on application, and privacy policy. </string>
