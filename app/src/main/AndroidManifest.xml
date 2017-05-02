@@ -3,6 +3,7 @@
     package="com.example.magpie.app">
 
     <application
+        android:supportsRtl="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher1"
         android:theme="@style/AppTheme">
@@ -50,10 +51,6 @@
         <activity
             android:name=".AboutUsActivity"
             android:label="Magpie" />
-        <activity
-            android:name=".EmailActivity"
-            android:label="Magpie"
-            ></activity>
     </application>
 
 </manifest>
