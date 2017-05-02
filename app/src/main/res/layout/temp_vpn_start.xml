@@ -37,7 +37,8 @@
         android:layout_below="@+id/imageView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:text="@string/ON_OFF"
+        android:text="Packet Capture\nON/OFF"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 

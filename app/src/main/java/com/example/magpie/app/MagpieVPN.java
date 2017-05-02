@@ -60,9 +60,9 @@ public class MagpieVPN extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         startVPN();
-                        Toast.makeText(MagpieVPN.this, "The VPN is starting up", LENGTH_SHORT).show();
+                        Toast.makeText(MagpieVPN.this, "Beginning packet capture", LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MagpieVPN.this, "The VPN is shutting down", LENGTH_SHORT).show();
+                        Toast.makeText(MagpieVPN.this, "Halting packet capture", LENGTH_SHORT).show();
                     }
                 }
             });
