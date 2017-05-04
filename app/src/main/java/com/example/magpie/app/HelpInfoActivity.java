@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class HelpInfoActivity extends AppCompatActivity implements View.OnClickListener{
+public class HelpInfoActivity extends AppCompatActivity{
 
     TextView textV_moreinfo;
     boolean isTxtViewClicked = false;
@@ -20,8 +20,6 @@ public class HelpInfoActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_info);
 
-        textV_moreinfo = (TextView)findViewById(R.id.additional_infoTxtV);
-        textV_moreinfo.setOnClickListener(this);
 
 
     }
@@ -90,7 +88,7 @@ public class HelpInfoActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+/*    @Override
     public void onClick(View view) {
 
         //if text is clicked expand click again to collapse
@@ -103,6 +101,6 @@ public class HelpInfoActivity extends AppCompatActivity implements View.OnClickL
             textV_moreinfo.setMaxLines(Integer.MAX_VALUE);
             isTxtViewClicked = true;
         }
-    }
+    }*/
 
 }

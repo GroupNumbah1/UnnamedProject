@@ -14,12 +14,12 @@
         android:id="@+id/vpn_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="67dp"
+        android:layout_marginEnd="75dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView3"
         android:layout_alignEnd="@+id/textView3"
-        android:layout_marginBottom="94dp" />
+        android:layout_marginTop="15dp" />
 
     <ImageView
         android:id="@+id/imageView3"

@@ -1,18 +1,41 @@
 package com.example.magpie.app;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class AboutUsActivity extends AppCompatActivity {
+    ImageButton emailaboutUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+
+        emailaboutUs = (ImageButton)findViewById(R.id.email_imagebtn);
+        emailaboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                //Intent emailIntent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+                //emailIntent.setData(Uri.parse("mailto:" + to));
+                //SetType for email is message/rfc822
+                emailIntent.setType("message/rfc822");
+
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"youremail@xyz"});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comment To Magpie");
+                //emailIntent.putExtra(Intent.EXTRA_TEXT, "File from Magpie Application");
+
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            }
+        });
     }
 
     @Override
@@ -74,12 +97,6 @@ public class AboutUsActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
         }
-
-
-
-
-
-
 
         return super.onOptionsItemSelected(item);
     }
