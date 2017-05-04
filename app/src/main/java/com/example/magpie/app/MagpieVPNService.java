@@ -179,8 +179,9 @@ public class MagpieVPNService extends VpnService {
                             try {
                                 Date date = new Date();
 
-                                File fileDir = new File(context.getFilesDir(), "file1" + dateFormat.format(date));
-                                FileOutputStream outputStream = new FileOutputStream(fileDir, true);
+                                File fileDir = new File(context.getFilesDir(), "outfile.txt");
+                                // overwrite current file if there is one with false param
+                                FileOutputStream outputStream = new FileOutputStream(fileDir, false);
                                 outputStream.write(packet.ip4Header.toString().getBytes());
                                 outputStream.close();
                             } catch (Exception e) {
