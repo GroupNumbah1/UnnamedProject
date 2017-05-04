@@ -10,12 +10,12 @@ SMTP packets can be collected. The packets are downloaded to your internal memor
 company do not collect any data from user during packet capture process. Additionally, the user has an option
 to send captured packets to a subsequent email, the application collects the users email address.
 Once user exits application email address is deleted and must be re-entered to send additional data.  </string>
-    <string name="ON_OFF">Toggle VPN ON/OFF</string>
+    <string name="ON_OFF">Packet Capture ON/OFF</string>
     <string name="info_forAboutus">We are a group of four attending University of Montana. This is our Senior Capstone
         project in CSCI 427 Advanced Progamming II. Are interests in computer science varies. However, we all agreed that this particular project would be an
         enjoyable endeavor to partake. Magpie named because of the method behind the Magpies nest building.. sifting, searching, for shiny tidbits to
         decorate its nest. Our tidbits are network packets specifically SMTP packets. Magpie is designed as a NFAT.</string>
-    <string name="contact_us">Contact us</string>
+    <string name="contact_us">Contact</string>
     <string name="thanks">Special Thanks for Icons made by Freepic from www.flaticon.com </string>
     <string name="additionalInfo">Click for Additional Info\n\nSMTP - (Simple Mail Transfer Protocol)
         SMTP is a delivery protocol. Type of protocol used for sending and receiving of emails.

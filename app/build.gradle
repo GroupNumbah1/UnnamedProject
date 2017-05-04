@@ -20,7 +20,7 @@ android {
             storeFile file('/Users/mattpatera/Documents/workspace/magpie.jks')
             storePassword 'asdfasdf'
         }
-    }
+   }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
