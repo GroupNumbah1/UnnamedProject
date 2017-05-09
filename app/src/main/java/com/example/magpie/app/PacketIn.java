@@ -36,7 +36,7 @@ public class PacketIn implements Runnable {
             Log.i(TAG, "Started");
             while (!Thread.interrupted())
             {
-                // gets count of available keys/channels
+
                 int readyChannels = selector.select();
 
                 if (readyChannels == 0) {
@@ -56,12 +56,10 @@ public class PacketIn implements Runnable {
                         keyIterator.remove();
 
                         ByteBuffer receiveBuffer = ByteBufferPool.acquire();
-                        // Leave space for the header
                         receiveBuffer.position(HEADER_SIZE);
 
                         DatagramChannel inputChannel = (DatagramChannel) key.channel();
-                        // XXX: We should handle any IOExceptions here immediately,
-                        // but that probably won't happen with UDP
+
                         int readBytes = inputChannel.read(receiveBuffer);
 
                         UdpPacket referencePacket = (UdpPacket) key.attachment();

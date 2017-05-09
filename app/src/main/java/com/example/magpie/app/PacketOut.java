@@ -12,6 +12,7 @@ import java.nio.channels.Selector;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.LinkedHashMap;
 
 /**
  * Created by mattpatera on 4/12/17.
@@ -25,15 +26,9 @@ public class PacketOut implements Runnable {
     private Selector selector;
 
     private static final int MAX_CACHE_SIZE = 50;
-    private LRUCache<String, DatagramChannel> channelCache =
-            new LRUCache<String, DatagramChannel>(MAX_CACHE_SIZE, new LRUCache.CleanupCallback<String, DatagramChannel>()
-            {
-                @Override
-                public void cleanup(Map.Entry<String, DatagramChannel> eldest)
-                {
-                    closeChannel(eldest.getValue());
-                }
-            });
+    private LinkedHashMap<String, DatagramChannel> channelCache =
+            new LinkedHashMap<String, DatagramChannel>(MAX_CACHE_SIZE);
+
 
     public PacketOut(ConcurrentLinkedQueue<UdpPacket> inputQueue, Selector selector, MagpieVPNService vpnService)
     {
@@ -53,7 +48,6 @@ public class PacketOut implements Runnable {
             while (true)
             {
                 UdpPacket currentPacket;
-                // TODO: Block when not connected
                 do
                 {
                     currentPacket = inputQueue.poll();
@@ -142,7 +136,6 @@ public class PacketOut implements Runnable {
         }
         catch (IOException e)
         {
-            // Ignore
         }
     }
 }
