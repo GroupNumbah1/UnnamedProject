@@ -3,9 +3,9 @@
     package="com.example.magpie.app">
 
     <application
-        android:supportsRtl="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher1"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <!-- Start Splash screen Activity -->
@@ -51,6 +51,8 @@
         <activity
             android:name=".AboutUsActivity"
             android:label="Magpie" />
+        <activity android:name=".DisplayFileContentsActivity"
+            android:label="Magpie"></activity>
     </application>
 
 </manifest>

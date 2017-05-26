@@ -12,7 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.magpie.app.R.layout.temp_vpn_start;
@@ -22,6 +29,9 @@ import static com.example.magpie.app.R.layout.temp_vpn_start;
  */
 
 public class MagpieVPN extends AppCompatActivity {
+
+    private static Context context;
+    public static String fileStatic_str = "";
 
     private static final String TAG = MagpieVPN.class.getSimpleName();
 
@@ -47,10 +57,14 @@ public class MagpieVPN extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MagpieVPN.context = getApplicationContext();
+
         setContentView(temp_vpn_start);
 
         // Grab switch element from view and cast it to a switch.
         final Switch vpn_toggle = (Switch)findViewById(R.id.vpn_toggle);
+
 
 
         // attach switch listener
@@ -62,12 +76,25 @@ public class MagpieVPN extends AppCompatActivity {
                         startVPN();
                         Toast.makeText(MagpieVPN.this, "Beginning packet capture", LENGTH_SHORT).show();
                     } else {
+                        stopVPN();
                         Toast.makeText(MagpieVPN.this, "Halting packet capture", LENGTH_SHORT).show();
+
+                        //Added intent to go to this activity when off(switch)
+                        Intent intent1 = new Intent(MagpieVPN.this, DisplayFileContentsActivity.class);
+                        startActivity(intent1);
+
                     }
                 }
             });
         }
     }
+
+    //create string for file contents can be accessible
+    public String GetString(){
+          //fileStatic_str = "dlkfasklfalkfalkfasldkjfdlakf";
+        return fileStatic_str;
+    }
+
 
     private void startVPN() {
         Log.i(TAG, "Starting MagpieVPN (MAGPIEVPN: 72)");
@@ -92,9 +119,45 @@ public class MagpieVPN extends AppCompatActivity {
             Log.i(TAG, "VPNIntent creation successful (MAGPIEVPN: 89)");
         }
     }
-
+//Need to change string to text view
     private void stopVPN() {
+        try {
+            File outfile = new File(context.getFilesDir(), "outfile.txt");
+            BufferedReader in = new BufferedReader(new FileReader(outfile));
+            String fileContents = readFile(in);
 
+            //add static string for textview
+            //fileStatic_str = "Dummy String";
+            fileStatic_str = fileContents;
+            Log.i(TAG, fileContents);
+
+
+
+        } catch (FileNotFoundException e) {
+            return;
+        }
+
+
+    }
+
+    public String readFile(BufferedReader br)
+    {
+        StringBuilder sb = new StringBuilder();
+        String tmp;
+
+        try
+        {
+            while((tmp = br.readLine()) != null)
+                sb.append(tmp).append("\n");
+        }
+        catch(IOException e)
+        {
+            return null;
+        }
+
+
+
+        return sb.toString();
     }
 
     @Override
