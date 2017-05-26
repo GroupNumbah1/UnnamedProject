@@ -68,7 +68,7 @@ public class MagpieVPNService extends VpnService {
         setupVPN();
         try {
             udpSelector = Selector.open();
-            deviceToNetworkUDPQueue = new ConcurrentLinkedQueue<UdpPacket>(); // may need to be untyped
+            deviceToNetworkUDPQueue = new ConcurrentLinkedQueue<UdpPacket>();
             networkToDeviceQueue = new ConcurrentLinkedQueue<ByteBuffer>();
 
             executorService = Executors.newFixedThreadPool(3);
@@ -96,7 +96,7 @@ public class MagpieVPNService extends VpnService {
             Builder vpnBuilder = new Builder();
             // Add address on which VPN listens
             vpnBuilder.addAddress(VPN_ADDRESS, VPN_ADDRESS_PREFIX_LENGTH);
-            // Route VPN traffic to desired internal location
+
             vpnBuilder.addRoute(VPN_ROUTE, VPN_ROUTE_PREFIX_LENGTH);
             vpnInterface = vpnBuilder.setSession("Magpie VPN").setConfigureIntent(pendingIntent).establish();
         } else {
@@ -122,7 +122,6 @@ public class MagpieVPNService extends VpnService {
             }
             catch (IOException e)
             {
-                // Ignore
             }
         }
     }
@@ -165,7 +164,7 @@ public class MagpieVPNService extends VpnService {
                     else
                         bufferToNetwork.clear();
 
-                    // TODO: Block when not connected
+
                     int readBytes = vpnInput.read(bufferToNetwork);
                     if (readBytes > 0) {
                         dataSent = true;
@@ -210,10 +209,10 @@ public class MagpieVPNService extends VpnService {
                         dataReceived = false;
                     }
 
-                    // TODO: Sleep-looping is not very battery-friendly, consider blocking instead
-                    // Confirm if throughput with ConcurrentQueue is really higher compared to BlockingQueue
-                    if (!dataSent && !dataReceived)
+
+                    if (!dataSent && !dataReceived) {
                         Thread.sleep(10);
+                    }
                 }
             }
             catch (InterruptedException e)
