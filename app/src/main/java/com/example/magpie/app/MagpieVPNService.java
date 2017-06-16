@@ -134,6 +134,7 @@ public class MagpieVPNService extends VpnService {
         private FileDescriptor vpnFileDescriptor;
 
         private ConcurrentLinkedQueue<UdpPacket> deviceToNetworkUDPQueue;
+        private ConcurrentLinkedQueue<ByteBuffer> deviceToNetworkAllElse;
         private ConcurrentLinkedQueue<ByteBuffer> networkToDeviceQueue;
 
         public VPNRunnable(FileDescriptor vpnFileDescriptor,
@@ -181,7 +182,7 @@ public class MagpieVPNService extends VpnService {
 
                                 File fileDir = new File(context.getFilesDir(), "outfile.txt");
                                 // overwrite current file if there is one with false param
-                                FileOutputStream outputStream = new FileOutputStream(fileDir, false);
+                                FileOutputStream outputStream = new FileOutputStream(fileDir, true);
                                 outputStream.write(packet.ip4Header.toString().getBytes());
                                 outputStream.close();
                             } catch (Exception e) {
