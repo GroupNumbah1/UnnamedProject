@@ -19,7 +19,7 @@ public class UdpPacket {
     public IP4Header ip4Header;
     public UDPHeader udpHeader;
 
-    public boolean isUDP; // make getter
+    public boolean isUDP;
 
     public ByteBuffer backingBuffer;
 
@@ -114,9 +114,9 @@ public class UdpPacket {
 
         public IP4Header(ByteBuffer buff) {
             byte versionAndIHL = buff.get();
-            this.version = (byte) (versionAndIHL >> 4); // TODO See if we need to do this. ( / 16 ?)
-            this.internetHeaderLen = (byte) (versionAndIHL & 0x0F);
-            this.headerLen = this.internetHeaderLen * 4; // TODO was bitshift << 2
+            this.version = (byte) (versionAndIHL >> 4); //contained in first nibble
+            this.internetHeaderLen = (byte) (versionAndIHL & 0x0F);//containted in 2nd nibble
+            this.headerLen = this.internetHeaderLen * 4; //byte count -> 32 bit word count
             this.DSCP = BitUtility.getUnsignedByte(buff.get());
             this.totalLen = BitUtility.getUnsignedShort(buff.getShort());
             this.whyAreFlags3Bits = buff.getInt();
@@ -154,6 +154,8 @@ public class UdpPacket {
             buffer.put(this.source.getAddress());
             buffer.put(this.target.getAddress());
         }
+
+        //
         public String toString()
         {
             return "IPV4 PACKET: \n" +
