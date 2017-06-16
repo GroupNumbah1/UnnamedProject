@@ -62,8 +62,8 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="53dp"
-            android:layout_height="64dp"
+            android:layout_width="47dp"
+            android:layout_height="46dp"
             android:layout_marginTop="44dp"
             android:contentDescription="@string/help"
             app:layout_constraintHorizontal_bias="0.498"
@@ -74,7 +74,8 @@
             app:srcCompat="@mipmap/ic_infooo"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
-            tools:layout_editor_absoluteY="484dp" />
+            tools:layout_editor_absoluteY="435dp"
+            tools:layout_editor_absoluteX="168dp" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -4,6 +4,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="help">Help?</string>
     <string name="home">HOME</string>
+    <string name="file_contents">File Contents</string>
     <string name="email_example">jDoe@gmail.com\nsomeones@yahoo.com</string>
     <string name="privacypolicy">Magpie application establishes a VPN connection in order to began packet capture. Once established
 SMTP packets can be collected. The packets are downloaded to your internal memory by default. We as a

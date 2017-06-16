@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Selector;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -131,6 +134,7 @@ public class MagpieVPNService extends VpnService {
         private FileDescriptor vpnFileDescriptor;
 
         private ConcurrentLinkedQueue<UdpPacket> deviceToNetworkUDPQueue;
+        private ConcurrentLinkedQueue<ByteBuffer> deviceToNetworkAllElse;
         private ConcurrentLinkedQueue<ByteBuffer> networkToDeviceQueue;
 
         public VPNRunnable(FileDescriptor vpnFileDescriptor,
@@ -147,7 +151,7 @@ public class MagpieVPNService extends VpnService {
             Log.i(TAG, "Started");
             Log.i(TAG, context.getFilesDir().toString());
 
-            File fileDir = new File(context.getFilesDir(), "file1");
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
             FileChannel vpnInput = new FileInputStream(vpnFileDescriptor).getChannel();
             FileChannel vpnOutput = new FileOutputStream(vpnFileDescriptor).getChannel();
@@ -174,6 +178,10 @@ public class MagpieVPNService extends VpnService {
 
                         } else {
                             try {
+                                Date date = new Date();
+
+                                File fileDir = new File(context.getFilesDir(), "outfile.txt");
+                                // overwrite current file if there is one with false param
                                 FileOutputStream outputStream = new FileOutputStream(fileDir, true);
                                 outputStream.write(packet.ip4Header.toString().getBytes());
                                 outputStream.close();
