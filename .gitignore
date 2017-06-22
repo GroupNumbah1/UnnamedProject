@@ -3,12 +3,13 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+.idea/runConfigurations.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 
-projectFilesBackup/
-.idea/runConfigurations.xml
+
 app/build/
 projectFilesBackup1/
+
